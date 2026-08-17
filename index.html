@@ -80,10 +80,21 @@
         }
       }
 
+      async function lockLandscape() {
+        if (screen.orientation?.lock) {
+          await screen.orientation.lock("landscape");
+        }
+      }
+
+      async function prepareDisplay() {
+        await enterFullscreen();
+        await lockLandscape();
+      }
+
       async function activatePlayer() {
         video.muted = false;
         video.volume = 1;
-        await Promise.allSettled([video.play(), enterFullscreen()]);
+        await Promise.allSettled([video.play(), prepareDisplay()]);
       }
 
       activationButton.addEventListener("click", async () => {
