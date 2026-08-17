@@ -1,1 +1,0 @@
-# michele-tn-ast-seven-shield-demo-player
