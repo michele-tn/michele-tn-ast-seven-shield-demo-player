@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <title>Seven Shield — Video</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      video {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        object-fit: contain;
+        background: #000;
+      }
+
+      button {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        color: #fff;
+        background: rgb(0 0 0 / 70%);
+        font: 600 clamp(1rem, 2.5vw, 1.5rem) system-ui, sans-serif;
+        cursor: pointer;
+      }
+
+      button[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <video autoplay controls playsinline preload="auto" aria-label="Video promozionale Seven Shield">
+      <source
+        src="https://michele-tn.github.io/Seven-Shield-Python-Code-Protection/Seven_Shield_UHD_PhotoZoom_TRANSITIONS_DELIVERY.mp4"
+        type="video/mp4"
+      >
+      Il browser non supporta i video HTML5.
+      <a href="https://michele-tn.github.io/Seven-Shield-Python-Code-Protection/Seven_Shield_UHD_PhotoZoom_TRANSITIONS_DELIVERY.mp4">
+        Scarica il video MP4.
+      </a>
+    </video>
+    <button type="button" hidden>Attiva fullscreen e audio</button>
+
+    <script>
+      const video = document.querySelector("video");
+      const activationButton = document.querySelector("button");
+
+      async function enterFullscreen() {
+        if (document.fullscreenElement) return;
+
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        } else if (video.webkitEnterFullscreen) {
+          video.webkitEnterFullscreen();
+        }
+      }
+
+      async function activatePlayer() {
+        video.muted = false;
+        video.volume = 1;
+        await Promise.allSettled([video.play(), enterFullscreen()]);
+      }
+
+      activationButton.addEventListener("click", async () => {
+        await activatePlayer();
+        activationButton.hidden = true;
+      });
+
+      window.addEventListener("load", async () => {
+        await activatePlayer();
+        activationButton.hidden = !video.paused && Boolean(document.fullscreenElement);
+      });
+    </script>
+  </body>
+</html>
